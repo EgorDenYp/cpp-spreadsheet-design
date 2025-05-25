@@ -27,7 +27,7 @@ public:
     double Execute(SheetInterface& sheet) const;
 
     //метод, позволяющий получить доступ к ячейкам таблицы с помощью Callback функций
-    double Execute(std::function<CellInterface::Value(Position)>) const;
+    double Execute(std::function<double(Position)>) const;
 
     void Print(std::ostream& out) const;
     void PrintFormula(std::ostream& out) const;
