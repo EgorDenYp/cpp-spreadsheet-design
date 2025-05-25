@@ -22,12 +22,19 @@ public:
     FormulaAST& operator=(FormulaAST&&) = default;
     ~FormulaAST();
 
-    double Execute() const;
+    //Теперь в метод Execute необходимо передавать ссылку на таблицу для расчета формул,
+    //содержащих индексы ячеек
+    double Execute(SheetInterface& sheet) const;
     void Print(std::ostream& out) const;
     void PrintFormula(std::ostream& out) const;
 
+    //метод, который будет возвращать вектор встреченных в формуле ячеек
+    //вектор будет отсортирован по возрастанию
+    std::vector<Position> GetInFormulaCells() const;
 private:
     std::unique_ptr<ASTImpl::Expr> root_expr_;
+    //Поле, сохраняющее все встреченные ячейки внутрь себя (по условию задания)
+    std::forward_list<Position> cells_;
 };
 
 FormulaAST ParseFormulaAST(std::istream& in);
